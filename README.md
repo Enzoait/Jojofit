@@ -29,3 +29,10 @@ cd JojoFit
 npx expo start
 ```
  - Une fois que le serveur à démarré, appuyer sur la touche "a" pour lancer l'application sur l'emulateur
+
+ ## Stack Technique :
+
+ - [React Native](https://reactnative.dev/)
+ - [Expo](https://expo.dev/)
+ - [Clerk](https://clerk.com/)
+ - [React Navigation](https://reactnavigation.org/)
