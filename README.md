@@ -33,6 +33,7 @@ npx expo start
  ## Stack Technique :
 
  - [React Native](https://reactnative.dev/)
+ - [TypeScript](https://www.typescriptlang.org/)
  - [Expo](https://expo.dev/)
  - [Clerk](https://clerk.com/)
  - [React Navigation](https://reactnavigation.org/)
