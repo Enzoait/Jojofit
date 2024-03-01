@@ -1,6 +1,9 @@
 export default {
     black: '#000000',
     white: '#ffffff',
+    gray: '#808080',
+    green: '#008000',
+    red: '#FF0000',
     appblue: '#66A4FA', //default
     blueSky: '#77B5FB',
     azureBreeze: '#88C6FC',
