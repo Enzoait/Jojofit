@@ -10,6 +10,20 @@
 
 ## Setup
 
+### Etape 0
+
+```sh
+git clone https://github.com/Enzoait/Jojofit
+```
+
+```sh
+cd JojoFit
+```
+
+```sh
+git checkout Val-branch
+```
+
 ### Etape 1
 
  - Installer l'extension vscode [Android iOS Emulator](https://marketplace.visualstudio.com/items?itemName=DiemasMichiels.emulate)
