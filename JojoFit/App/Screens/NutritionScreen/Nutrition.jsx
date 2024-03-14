@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, ScrollView, StyleSheet } from 'react-native';
 import Colors from '../../Utils/Colors';
-import secret from '../../../secret/secret';
 
 export default function Nutrition() {
   const [searchText, setSearchText] = useState('');
@@ -12,7 +11,30 @@ export default function Nutrition() {
     fat: '0',
   });
   const [isEditing, setIsEditing] = useState(false);
-  const [cards, setCards] = useState([{...nutrients}]);
+  const [cards, setCards] = useState([{ ...nutrients }]);
+  const [searchResults, setSearchResults] = useState([]);
+
+  const handleSearch = async () => {
+    try {
+      const response = await fetch(`http://localhost:3001/search?query=${searchText}`);
+      if (!response.ok) {
+        console.error('Network response was not ok:', response.status);
+        throw new Error('Network response was not ok');
+      }
+      const data = await response.json();
+      setSearchResults(data.foods.food);
+    } catch (error) {
+      console.error('Error fetching or parsing search results:', error);
+      setError('An error occurred while fetching search results. Please try again later.');
+    }
+    
+  };
+
+  const handleSearch2 = () => {
+    if (searchText.trim() !== '') {
+      handleSearch(searchText);
+    }
+  };
 
   const handleEditPress = () => {
     setIsEditing(!isEditing);
@@ -43,71 +65,6 @@ export default function Nutrition() {
     </View>
   );
 
-  const generateOAuthSignature = (parameters, consumerKey, consumerSecret, accessToken, tokenSecret) => {
-    const encodedParams = Object.keys(parameters)
-      .sort()
-      .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(parameters[key])}`)
-      .join('&');
-  
-    const signatureBaseString = `POST&${encodeURIComponent('https://platform.fatsecret.com/rest/server.api')}&${encodeURIComponent(encodedParams)}`;
-  
-    const hmac = (key, data) => {
-      const hash = require('crypto-js/hmac-sha1');
-      return hash(data, key).toString();
-    };
-  
-    const signingKey = `${encodeURIComponent(consumerKey)}&${encodeURIComponent(consumerSecret)}&${encodeURIComponent(accessToken)}&${encodeURIComponent(tokenSecret)}`;
-  
-    return hmac(signingKey, signatureBaseString);
-  };
-
-  const searchFood = async (query) => {
-    const oauthConsumerKey = secret.consumer_key; 
-    const oauthToken = secret.oauth_token; 
-
-    const oauthNonce = Math.random().toString(36).substring(2);
-    const oauthTimestamp = Math.floor(Date.now() / 1000).toString();
-
-    const parameters = {
-      method: 'foods.search',
-      format: 'json',
-      page_number: '0',
-      max_results: '10',
-      search_expression: query,
-      oauth_consumer_key: oauthConsumerKey,
-      oauth_token: oauthToken,
-      oauth_signature_method: 'HMAC-SHA1',
-      oauth_timestamp: oauthTimestamp,
-      oauth_nonce: oauthNonce,
-      oauth_version: '1.0',
-    };
-
-    parameters.oauth_signature = generateOAuthSignature(parameters, secret.consumer_key, secret.consumer_secret, secret.access_token, secret.access_secret);
-
-    const url = 'https://platform.fatsecret.com/rest/server.api';
-    try {
-      const response = await fetch(url, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: Object.keys(parameters)
-          .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(parameters[key])}`)
-          .join('&'),
-      });
-      const data = await response.json();
-      console.log(data); // Handle the response data here
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    }
-  };
-
-  const handleSearch = () => {
-    if (searchText.trim() !== '') {
-      searchFood(searchText);
-    }
-  };
-
   return (
     <ScrollView style={styles.scrollView}>
       <View style={styles.container}>
@@ -121,7 +78,7 @@ export default function Nutrition() {
               placeholder="Search..."
               value={searchText}
               onChangeText={(text) => setSearchText(text)}
-              onSubmitEditing={handleSearch} // Call handleSearch when user submits
+              onSubmitEditing={handleSearch2}
             />
 
             <View style={styles.nutritionDetails}>
