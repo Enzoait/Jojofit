@@ -3,6 +3,7 @@ export default {
     white: '#ffffff',
     gray: '#808080',
     green: '#008000',
+    orange: "#ff8000",
     red: '#FF0000',
     appblue: '#66A4FA', //default
     blueSky: '#77B5FB',

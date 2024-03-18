@@ -58,11 +58,11 @@ export default function Exercises() {
 
             <View style={styles.exerciseDetails}>
               <View style={styles.column}>
-                {renderExerciseField('Weight', 'weight', index)}
-                {renderExerciseField('Difficulty', 'difficulty', index)}
+                {renderExerciseField('Poids', 'weight', index)}
+                {renderExerciseField('Intensité', 'difficulty', index)}
               </View>
               <View style={styles.column}>
-                {renderExerciseField('Repetitions', 'repetitions', index)}
+                {renderExerciseField('Répétitions', 'repetitions', index)}
               </View>
             </View>
 

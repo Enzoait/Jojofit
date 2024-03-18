@@ -59,12 +59,12 @@ export default function Nutrition() {
 
             <View style={styles.nutritionDetails}>
               <View style={styles.column}>
-                {renderNutrientField('Weight', 'weight', index)}
-                {renderNutrientField('Lipids', 'lipids', index)}
+                {renderNutrientField('Poids', 'weight', index)}
+                {renderNutrientField('Lipides', 'lipids', index)}
               </View>
               <View style={styles.column}>
-                {renderNutrientField('Proteins', 'proteins', index)}
-                {renderNutrientField('Fat', 'fat', index)}
+                {renderNutrientField('Protéines', 'proteins', index)}
+                {renderNutrientField('Gras', 'fat', index)}
               </View>
             </View>
 
